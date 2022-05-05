@@ -1,35 +1,37 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'application'
+group "tv.animeclassroom"
+version "0.0.1"
+mainClassName = "tv.animeclassroom.ApplicationKt"
 
-group 'com.animeclassroom'
-version '0.0.1'
-mainClassName = "io.ktor.server.netty.EngineMain"
-
-sourceSets {
-    main.kotlin.srcDirs = main.java.srcDirs = ['src']
-    test.kotlin.srcDirs = test.java.srcDirs = ['test']
-    main.resources.srcDirs = ['resources']
-    test.resources.srcDirs = ['testresources']
-}
+def isDevelopment = project.ext.has("development")
+applicationDefaultJvmArgs = ["-Dio.ktor.development=$isDevelopment"]
 
 repositories {
-    mavenLocal()
-    jcenter()
+    mavenCentral()
+    maven { url "https://maven.pkg.jetbrains.space/public/p/ktor/eap" }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "io.ktor:ktor-server-netty:$ktor_version"
+    implementation "io.ktor:ktor-server-content-negotiation-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-core-jvm:$ktor_version"
+    implementation "io.ktor:ktor-serialization-gson-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-freemarker-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-default-headers-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-host-common-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-status-pages-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-auto-head-response-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-sessions-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-auth-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-locations-jvm:$ktor_version"
+    implementation "io.ktor:ktor-client-core-jvm:$ktor_version"
+    implementation "io.ktor:ktor-client-apache-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-auth-jwt-jvm:$ktor_version"
+    implementation "io.ktor:ktor-server-netty-jvm:$ktor_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
-    testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+    testImplementation "io.ktor:ktor-server-tests-jvm:$ktor_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
